@@ -1,8 +1,11 @@
 FROM node:16-alpine AS deps
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache make gcc g++ py-pip
+# RUN apk update && \
+#     apk upgrade && \
+#     apk add --no-cache make gcc g++ py-pip
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories &&  \
+apk update && apk upgrade && \
+apk add --no-cache make gcc g++ py-pip
 
 WORKDIR /app
 COPY package.json yarn.lock ./
