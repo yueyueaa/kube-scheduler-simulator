@@ -1,4 +1,4 @@
-package nodenumber
+package yuescheduler
 
 import (
 	"context"
@@ -14,14 +14,14 @@ import (
 	frameworkruntime "k8s.io/kubernetes/pkg/scheduler/framework/runtime"
 )
 
-// NodeNumber is an example plugin that favors nodes that have the number suffix which is the same as the number suffix of the pod name.
+// YueScheduler is an example plugin that favors nodes that have the number suffix which is the same as the number suffix of the pod name.
 // But if a reverse option is true, it favors nodes that have the number suffix which **isn't** the same as the number suffix of pod name.
 //
 // For example:
 // With reverse option false, when schedule a pod named Pod1, a Node named Node1 gets a lower score than a node named Node9.
 //
 // NOTE: this plugin only handle single digit numbers only.
-type NodeNumber struct {
+type YueScheduler struct {
 	// if reverse is true, it favors nodes that doesn't have the same number suffix.
 	//
 	// For example:
@@ -30,18 +30,18 @@ type NodeNumber struct {
 }
 
 var (
-	_ framework.ScorePlugin    = &NodeNumber{}
-	_ framework.PreScorePlugin = &NodeNumber{}
+	_ framework.ScorePlugin    = &YueScheduler{}
+	_ framework.PreScorePlugin = &YueScheduler{}
 )
 
 const (
 	// Name is the name of the plugin used in the plugin registry and configurations.
-	Name             = "NodeNumber"
+	Name             = "YueScheduler"
 	preScoreStateKey = "PreScore" + Name
 )
 
 // Name returns the name of the plugin. It is used in logs, etc.
-func (pl *NodeNumber) Name() string {
+func (pl *YueScheduler) Name() string {
 	return Name
 }
 
@@ -56,8 +56,8 @@ func (s *preScoreState) Clone() framework.StateData {
 	return s
 }
 
-func (pl *NodeNumber) PreScore(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodes []*v1.Node) *framework.Status {
-	klog.InfoS("execute PreScore on NodeNumber plugin", "pod", klog.KObj(pod))
+func (pl *YueScheduler) PreScore(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodes []*v1.Node) *framework.Status {
+	klog.InfoS("execute PreScore on YueScheduler plugin", "pod", klog.KObj(pod))
 
 	podNameLastChar := pod.Name[len(pod.Name)-1:]
 	podnum, err := strconv.Atoi(podNameLastChar)
@@ -74,7 +74,7 @@ func (pl *NodeNumber) PreScore(ctx context.Context, state *framework.CycleState,
 	return nil
 }
 
-func (pl *NodeNumber) EventsToRegister() []framework.ClusterEvent {
+func (pl *YueScheduler) EventsToRegister() []framework.ClusterEvent {
 	return []framework.ClusterEvent{
 		{Resource: framework.Node, ActionType: framework.Add},
 	}
@@ -83,8 +83,8 @@ func (pl *NodeNumber) EventsToRegister() []framework.ClusterEvent {
 var ErrNotExpectedPreScoreState = errors.New("unexpected pre score state")
 
 // Score invoked at the score extension point.
-func (pl *NodeNumber) Score(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodeName string) (int64, *framework.Status) {
-	klog.InfoS("execute Score on NodeNumber plugin", "pod", klog.KObj(pod))
+func (pl *YueScheduler) Score(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodeName string) (int64, *framework.Status) {
+	klog.InfoS("execute Score on YueScheduler plugin", "pod", klog.KObj(pod))
 	data, err := state.Read(preScoreStateKey)
 	if err != nil {
 		// return success even if there is no value in preScoreStateKey, since the
@@ -122,27 +122,27 @@ func (pl *NodeNumber) Score(ctx context.Context, state *framework.CycleState, po
 }
 
 // ScoreExtensions of the Score plugin.
-func (pl *NodeNumber) ScoreExtensions() framework.ScoreExtensions {
+func (pl *YueScheduler) ScoreExtensions() framework.ScoreExtensions {
 	return nil
 }
 
 // New initializes a new plugin and returns it.
 func New(ctx context.Context, arg runtime.Object, h framework.Handle) (framework.Plugin, error) {
-	typedArg := NodeNumberArgs{Reverse: false}
+	typedArg := YueSchedulerArgs{Reverse: false}
 	if arg != nil {
 		err := frameworkruntime.DecodeInto(arg, &typedArg)
 		if err != nil {
-			return nil, xerrors.Errorf("decode arg into NodeNumberArgs: %w", err)
+			return nil, xerrors.Errorf("decode arg into YueSchedulerArgs: %w", err)
 		}
-		klog.Info("NodeNumberArgs is successfully applied")
+		klog.Info("YueSchedulerArgs is successfully applied")
 	}
-	return &NodeNumber{reverse: typedArg.Reverse}, nil
+	return &YueScheduler{reverse: typedArg.Reverse}, nil
 }
 
-// NodeNumberArgs is arguments for node number plugin.
+// YueSchedulerArgs is arguments for node number plugin.
 //
 //nolint:revive
-type NodeNumberArgs struct {
+type YueSchedulerArgs struct {
 	metav1.TypeMeta
 
 	Reverse bool `json:"reverse"`
