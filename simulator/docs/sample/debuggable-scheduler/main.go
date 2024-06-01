@@ -12,14 +12,14 @@ import (
 	"k8s.io/klog/v2"
 	"k8s.io/kubernetes/pkg/scheduler/framework/plugins/noderesources"
 
-	"sigs.k8s.io/kube-scheduler-simulator/simulator/docs/sample/nodenumber"
+	"sigs.k8s.io/kube-scheduler-simulator/simulator/docs/sample/yuescheduler"
 	extender "sigs.k8s.io/kube-scheduler-simulator/simulator/docs/sample/plugin-extender"
 	"sigs.k8s.io/kube-scheduler-simulator/simulator/pkg/debuggablescheduler"
 )
 
 func main() {
 	command, cancelFn, err := debuggablescheduler.NewSchedulerCommand(
-		debuggablescheduler.WithPlugin(nodenumber.Name, nodenumber.New),           // Register the custom scheduler plugin.
+		debuggablescheduler.WithPlugin(yuescheduler.Name, yuescheduler.New),           // Register the custom scheduler plugin.
 		debuggablescheduler.WithPluginExtenders(noderesources.Name, extender.New), // [Optional] Register the plugin extender. See /simulator/docs/plugin-extender.md
 	)
 	if err != nil {

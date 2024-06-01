@@ -31,7 +31,7 @@ export default defineComponent({
   setup() {},
   data() {
     return {
-      title: "Kubernetes scheduler simulator",
+      title: "Kubernetes 自定义调度器",
     };
   },
 });

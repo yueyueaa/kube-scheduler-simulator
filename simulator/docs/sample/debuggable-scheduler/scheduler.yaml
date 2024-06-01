@@ -7,5 +7,5 @@ profiles:
     plugins:
       multiPoint:
         enabled:
-          - name: NodeNumber
+          - name: YueScheduler
             weight: 10

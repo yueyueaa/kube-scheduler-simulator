@@ -2,7 +2,7 @@
   <v-row v-if="namespaces.length !== 0" no-gutters>
     <v-col>
       <v-card class="ma-2" outlined>
-        <v-card-title class="mb-1"> Namespaces </v-card-title>
+        <v-card-title class="mb-1"> 命名空间 </v-card-title>
         <v-card-actions>
           <v-chip
             v-for="(p, i) in namespaces"

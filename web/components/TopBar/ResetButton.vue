@@ -1,21 +1,21 @@
 <template>
   <v-dialog v-model="data.dialog" width="500">
     <template #activator="{ on }">
-      <v-btn class="ma-2" color="error" v-on="on"> Reset </v-btn>
+      <v-btn class="ma-2" color="error" v-on="on"> 重置 </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="2">
-        Are you sure to reset all resources and scheduler configuration?
+        你确定要重置所有资源和调度器配置吗？
       </v-card-title>
       <v-divider></v-divider>
       <v-divider></v-divider>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="resetFn"> Reset </v-btn>
+        <v-btn color="green darken-1" text @click="resetFn"> 确认 </v-btn>
         <v-btn color="green darken-1" text @click="data.dialog = false">
-          Cancel
+          取消
         </v-btn>
       </v-card-actions>
     </v-card>

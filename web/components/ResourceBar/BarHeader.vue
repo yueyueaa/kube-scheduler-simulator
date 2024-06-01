@@ -14,7 +14,7 @@
         </v-col>
         <v-spacer v-for="n in 3" :key="n" />
         <v-col>
-          <v-btn class="ma-5 mb-0" @click="applyOnClick"> Apply </v-btn>
+          <v-btn class="ma-5 mb-0" @click="applyOnClick"> 应用 </v-btn>
         </v-col>
         <v-col>
           <ResourceDeleteButton

@@ -1,6 +1,6 @@
 <template>
   <v-card v-if="pods && pods.length !== 0" class="ma-2" outlined>
-    <v-card-title class="mb-1"> Unscheduled Pods </v-card-title>
+    <v-card-title class="mb-1"> 未被调度任务容器 </v-card-title>
     <PodList node-name="unscheduled" />
   </v-card>
 </template>

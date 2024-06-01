@@ -2,13 +2,13 @@
   <v-dialog v-model="dialog" width="500">
     <template #activator="{ on, attrs }">
       <v-btn class="ma-5 mb-0" color="error" v-bind="attrs" v-on="on">
-        Delete
+        删除
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="2">
-        Are you sure to delete the resource?
+        你确定删除这个资源？
       </v-card-title>
       <v-divider></v-divider>
       <v-divider></v-divider>

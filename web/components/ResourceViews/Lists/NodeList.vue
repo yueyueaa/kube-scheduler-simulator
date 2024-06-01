@@ -1,6 +1,6 @@
 <template>
   <v-card v-if="nodes.length !== 0" class="ma-2" outlined>
-    <v-card-title class="mb-1"> Nodes </v-card-title>
+    <v-card-title class="mb-1"> 服务器节点 </v-card-title>
     <v-container>
       <v-row no-gutters>
         <v-col v-for="(n, i) in nodes" :key="i" tile cols="auto">

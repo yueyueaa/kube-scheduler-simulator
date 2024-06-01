@@ -5,11 +5,18 @@ import (
 	configv1 "k8s.io/kube-scheduler/config/v1"
 	"k8s.io/kubernetes/pkg/scheduler/framework/plugins"
 	"k8s.io/kubernetes/pkg/scheduler/framework/runtime"
+	"sigs.k8s.io/kube-scheduler-simulator/simulator/scheduler/yuescheduler"
 )
 
-var outOfTreeRegistries = runtime.Registry{
-	// TODO(user): add your plugins registries here.
-}
+var (
+	outOfTreeRegistries = runtime.Registry{
+		// TODO(user): add your plugins registries here.
+		yuescheduler.Name: yuescheduler.New,
+	}
+	registeredOutOfTreeMultiPointName = []string{
+		yuescheduler.Name,
+	}
+)
 
 // RegisteredMultiPointPluginNames returns all registered multipoint plugin names.
 // in-tree plugins and your original plugins listed in outOfTreeRegistries above.

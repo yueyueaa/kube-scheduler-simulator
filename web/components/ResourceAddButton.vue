@@ -7,7 +7,7 @@
       dark
       @click="create(rn)"
     >
-      New {{ rn }}
+      新{{ rn }}
     </v-btn>
   </v-sheet>
 </template>
@@ -96,43 +96,23 @@ export default defineComponent({
 
     const dialog = ref(false);
     const resourceNames = [
-      "StorageClass",
-      "PersistentVolumeClaim",
-      "PersistentVolume",
-      "Node",
-      "Pod",
-      "PriorityClass",
-      "Namespace",
+      "服务器节点",
+      "任务容器",
+      "命名空间",
     ];
 
     const create = (rn: string) => {
       var targetTemplate: Resource | null = null;
       switch (rn) {
-        case "Pod":
+        case "任务容器":
           store = podstore;
           targetTemplate = podTemplate();
           break;
-        case "Node":
+        case "服务器节点":
           store = nodestore;
           targetTemplate = nodeTemplate();
           break;
-        case "PersistentVolume":
-          store = pvstore;
-          targetTemplate = pvTemplate();
-          break;
-        case "PersistentVolumeClaim":
-          store = pvcstore;
-          targetTemplate = pvcTemplate();
-          break;
-        case "StorageClass":
-          store = storageclassstore;
-          targetTemplate = storageclassTemplate();
-          break;
-        case "PriorityClass":
-          store = priorityclassstore;
-          targetTemplate = priorityclassTemplate();
-          break;
-        case "Namespace":
+        case "命名空间":
           store = namespacestore;
           targetTemplate = namespaceTemplate();
           break;

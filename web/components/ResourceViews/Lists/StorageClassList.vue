@@ -2,7 +2,7 @@
   <v-row v-if="storageclasses.length !== 0" no-gutters>
     <v-col>
       <v-card class="ma-2" outlined>
-        <v-card-title class="mb-1"> StorageClasses </v-card-title>
+        <v-card-title class="mb-1"> 存储 </v-card-title>
         <v-card-actions>
           <v-chip
             v-for="(p, i) in storageclasses"
