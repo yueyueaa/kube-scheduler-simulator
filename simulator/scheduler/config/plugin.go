@@ -5,7 +5,9 @@ import (
 	configv1 "k8s.io/kube-scheduler/config/v1"
 	"k8s.io/kubernetes/pkg/scheduler/framework/plugins"
 	"k8s.io/kubernetes/pkg/scheduler/framework/runtime"
-	 "github.com/yueyueaa/kube-scheduler-simulator/simulator/scheduler/yuescheduler"
+
+	// "sigs.k8s.io/kube-scheduler-simulator/simulator/docs/sample/nodenumber"
+	"github.com/yueyueaa/kube-scheduler-simulator/simulator/pkg/yuescheduler"
 )
 
 var (
