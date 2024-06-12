@@ -6,17 +6,18 @@ import (
 	"k8s.io/kubernetes/pkg/scheduler/framework/plugins"
 	"k8s.io/kubernetes/pkg/scheduler/framework/runtime"
 
-	// "sigs.k8s.io/kube-scheduler-simulator/simulator/docs/sample/nodenumber"
-	"github.com/yueyueaa/kube-scheduler-simulator/simulator/pkg/yuescheduler"
+	"sigs.k8s.io/kube-scheduler-simulator/simulator/docs/sample/nodenumber"
+	// "kube-scheduler-simulator/yuescheduler"
+	// "github.com/yueyueaa/kube-scheduler-simulator/simulator/pkg/yuescheduler"
 )
 
 var (
 	outOfTreeRegistries = runtime.Registry{
 		// TODO(user): add your plugins registries here.
-		yuescheduler.Name: yuescheduler.New,
+		nodenumber.Name: nodenumber.New,
 	}
 	registeredOutOfTreeMultiPointName = []string{
-		yuescheduler.Name,
+		nodenumber.Name,
 	}
 )
 

@@ -20,11 +20,7 @@ import { LastResourceVersions } from "@/types/api/v1";
 import {
   V1Namespace,
   V1Node,
-  V1PersistentVolume,
-  V1PersistentVolumeClaim,
   V1Pod,
-  V1PriorityClass,
-  V1StorageClass,
 } from "@kubernetes/client-node";
 
 export default defineComponent({
@@ -41,26 +37,6 @@ export default defineComponent({
     if (!nstore) {
       throw new Error(`${NodeStoreKey.description} is not provided`);
     }
-    const pvcstore = inject(PersistentVolumeClaimStoreKey);
-    if (!pvcstore) {
-      throw new Error(
-        `${PersistentVolumeClaimStoreKey.description} is not provided`
-      );
-    }
-    const pvstore = inject(PersistentVolumeStoreKey);
-    if (!pvstore) {
-      throw new Error(
-        `${PersistentVolumeStoreKey.description} is not provided`
-      );
-    }
-    const priorityclassstore = inject(PriorityClassStoreKey);
-    if (!priorityclassstore) {
-      throw new Error(`${PriorityClassStoreKey.description} is not provided`);
-    }
-    const storageclassstore = inject(StorageClassStoreKey);
-    if (!storageclassstore) {
-      throw new Error(`${StorageClassStoreKey.description} is not provided`);
-    }
     const namespacestore = inject(NamespaceStoreKey);
     if (!namespacestore) {
       throw new Error(`${NamespaceStoreKey.description} is not provided`);
@@ -74,10 +50,6 @@ export default defineComponent({
     onMounted(async () => {
       await pstore.initList();
       await nstore.initList();
-      await pvcstore.initList();
-      await pvstore.initList();
-      await priorityclassstore.initList();
-      await storageclassstore.initList();
       await namespacestore.initList();
       await watchAndUpdates();
     });
@@ -86,10 +58,6 @@ export default defineComponent({
       return {
         pods: pstore.lastResourceVersion,
         nodes: nstore.lastResourceVersion,
-        pvs: pvstore.lastResourceVersion,
-        pvcs: pvcstore.lastResourceVersion,
-        storageClasses: storageclassstore.lastResourceVersion,
-        priorityClasses: priorityclassstore.lastResourceVersion,
         namespaces: namespacestore.lastResourceVersion,
       } as LastResourceVersions;
     };
@@ -137,46 +105,6 @@ export default defineComponent({
                     nstore.setLastResourceVersion(event.Obj as V1Node);
                     break;
                   }
-                  case resourceKind.PVS: {
-                    pvstore.watchEventHandler(
-                      event.EventType,
-                      event.Obj as V1PersistentVolume
-                    );
-                    pvstore.setLastResourceVersion(
-                      event.Obj as V1PersistentVolume
-                    );
-                    break;
-                  }
-                  case resourceKind.PVCS: {
-                    pvcstore.watchEventHandler(
-                      event.EventType,
-                      event.Obj as V1PersistentVolumeClaim
-                    );
-                    pvcstore.setLastResourceVersion(
-                      event.Obj as V1PersistentVolumeClaim
-                    );
-                    break;
-                  }
-                  case resourceKind.SCS: {
-                    storageclassstore.watchEventHandler(
-                      event.EventType,
-                      event.Obj as V1StorageClass
-                    );
-                    storageclassstore.setLastResourceVersion(
-                      event.Obj as V1StorageClass
-                    );
-                    break;
-                  }
-                  case resourceKind.PCS: {
-                    priorityclassstore.watchEventHandler(
-                      event.EventType,
-                      event.Obj as V1PriorityClass
-                    );
-                    priorityclassstore.setLastResourceVersion(
-                      event.Obj as V1PriorityClass
-                    );
-                    break;
-                  }
                   case resourceKind.NAMESPACES: {
                     namespacestore.watchEventHandler(
                       event.EventType,
@@ -218,10 +146,6 @@ type WatchEvent = {
 enum resourceKind {
   PODS = "pods",
   NODES = "nodes",
-  PVS = "persistentvolumes",
-  PVCS = "persistentvolumeclaims",
-  SCS = "storageclasses",
-  PCS = "priorityclasses",
   NAMESPACES = "namespaces",
 }
 
